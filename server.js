@@ -5,11 +5,19 @@ import apiRoutes from './routes/apiRoutes.js';
 const app = express();
 
 const PORT = process.env.PORT || 3000;
+const staticFolder = 'public';
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static(staticFolder));
 
 app.use('/api', apiRoutes);
+
+async function dining_hall(){
+  const req = await fetch("/api/dining");
+  const dining = await req.json();
+  console.log(dining)
+}
 
 async function bootServer() {
   try {
@@ -22,5 +30,6 @@ async function bootServer() {
     console.error(err);
   }
 }
+
 
 bootServer();
